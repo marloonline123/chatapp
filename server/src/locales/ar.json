@@ -1,0 +1,11 @@
+{
+    "auth": {
+        "register_success": "تم تسجيل المستخدم بنجاح",
+        "login_success": "تم تسجيل دخول المستخدم بنجاح",
+        "forgot_password_success": "تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني",
+        "reset_password_success": "تم إعادة تعيين كلمة المرور بنجاح"
+    },
+    "validation": {
+        "invalid_type": "{{ field }} يجب أن يكون نصا"
+    }
+}

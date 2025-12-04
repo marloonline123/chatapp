@@ -1,0 +1,13 @@
+export interface SuccessResponse<T> {
+    success?: true;
+    message?: string;
+    data?: T;
+    code?: number;
+}
+
+export interface ErrorResponse {
+    success: false;
+    message: string;
+    errors?: any;
+    code?: number;
+}

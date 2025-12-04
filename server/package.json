@@ -7,19 +7,30 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec tsx src/index.ts",
+    "dev": "nodemon --watch src --ext ts --exec tsx -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-jwt": "^8.5.1",
+    "i18next": "^25.7.1",
+    "i18next-fs-backend": "^2.6.1",
+    "i18next-http-middleware": "^3.8.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
-    "winston": "^3.18.3"
+    "tsconfig-paths": "^4.2.0",
+    "winston": "^3.18.3",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
+    "@types/i18next": "^12.1.0",
     "@types/node": "^24.10.1",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
