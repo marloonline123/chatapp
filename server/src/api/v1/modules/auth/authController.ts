@@ -3,7 +3,7 @@ import type { LoginForm, RegisterForm } from "@/api/v1/modules/auth/schema.js";
 import { UserModel } from "@/api/v1/modules/auth/model.js";
 import { successResponse } from "@/utils/response.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "@/api/v1/modules/auth/services.js";
+import { clearAuthToken, generateToken } from "@/api/v1/modules/auth/services.js";
 import { UserResource } from "./resource.js";
 import { InvalidCredentialsException, UserExistException } from "@/exceptions/auth/index.js";
 
@@ -65,6 +65,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-    res.clearCookie('auth_token');
+    clearAuthToken(res);
     return res.status(200).json(successResponse({ message: req.t('auth.logout_success') }));
 };
