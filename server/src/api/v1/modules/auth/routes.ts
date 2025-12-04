@@ -1,4 +1,7 @@
 import { Router, type Request, type Response } from "express";
+import { register } from "@/api/v1/modules/auth/authController.js";
+import { validate } from "@/middlewares/validate.js";
+import { registerSchema } from "@/api/v1/modules/auth/schema.js";
 
 const authRouter = Router();
 
@@ -7,10 +10,7 @@ authRouter.get("/login", (req: Request, res: Response) => {
     res.send("Login route");
 });
 
-// POST /register
-authRouter.post("/register", (req: Request, res: Response) => {
-    res.send("Register route");
-});
+authRouter.post("/register", validate(registerSchema), register);
 
 // POST /forgot-password
 authRouter.post("/forgot-password", (req: Request, res: Response) => {
