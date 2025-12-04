@@ -9,7 +9,7 @@ export const successResponse = <T>({ success = true, message, data, code = 200 }
     };
 };
 
-export const errorResponse = ({ success = false, message, errors, code = 400 }: ErrorResponse) => {
+export const errorResponse = <T>({ success = false, message, errors, code = 400 }: ErrorResponse<T>) => {
     return {
         success,
         message,

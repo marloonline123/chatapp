@@ -13,8 +13,6 @@ server.use(express.json());
 server.use(cookieParser());
 server.use(i18n);
 
-// z.locales.ar();
-
 server.use("/api/v1", apiV1Router);
 
 createDbConnection()

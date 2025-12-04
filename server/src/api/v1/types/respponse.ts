@@ -5,9 +5,9 @@ export interface SuccessResponse<T> {
     code?: number;
 }
 
-export interface ErrorResponse {
-    success: false;
-    message: string;
-    errors?: any;
+export interface ErrorResponse<T> {
+    success?: false;
+    message?: string;
+    errors?: T;
     code?: number;
 }

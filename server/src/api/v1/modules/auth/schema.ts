@@ -9,4 +9,4 @@ export const registerSchema = z.object({
     })
 });
 
-export type RegisterForm = z.infer<typeof registerSchema>;
+export type RegisterForm = z.infer<typeof registerSchema>["body"];

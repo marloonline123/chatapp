@@ -1,7 +1,7 @@
 import type { User } from "@/api/v1/modules/auth/model.js";
-import type { ObjectIdSchemaDefinition } from "mongoose";
+import type { HydratedDocument } from "mongoose";
 
-export const UserResource = (user: User & { _id: ObjectIdSchemaDefinition }) => ({
+export const UserResource = (user: HydratedDocument<User>) => ({
     id: user._id,
     name: user.name,
     username: user.username,
