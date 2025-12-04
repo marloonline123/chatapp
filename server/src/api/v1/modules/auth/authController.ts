@@ -1,58 +1,70 @@
 import type { Request, Response } from "express";
-import type { RegisterForm } from "@/api/v1/modules/auth/schema.js";
+import type { LoginForm, RegisterForm } from "@/api/v1/modules/auth/schema.js";
 import { UserModel } from "@/api/v1/modules/auth/model.js";
-import { errorResponse, successResponse } from "@/utils/response.js";
+import { successResponse } from "@/utils/response.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "@/api/v1/modules/auth/services.js";
+import { clearAuthToken, generateToken } from "@/api/v1/modules/auth/services.js";
 import { UserResource } from "./resource.js";
-import Log from "@/utils/logger.js";
-import UserExistException from "@/exceptions/auth/UserExistException.js";
+import { InvalidCredentialsException, UserExistException } from "@/exceptions/auth/index.js";
 
 export const register = async (req: Request, res: Response) => {
-    try {
-        const { name, username, password, email } = req.body as RegisterForm;
+    const { name, username, password, email } = req.body as RegisterForm;
 
-        const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
+    // Check if user with same username or email exists
+    const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
 
-        if (existingUser) {
-            throw new UserExistException();
-        }
+    if (existingUser) throw new UserExistException();
 
-        const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-        const newUser = await UserModel.create({
-            name,
-            username,
-            email,
-            password: hashedPassword
-        });
+    // Create new user
+    const newUser = await UserModel.create({
+        name,
+        username,
+        email,
+        password: hashedPassword
+    });
 
-        generateToken(newUser._id, res);
+    // Generate token and set cookie
+    generateToken(newUser._id, res);
 
-        return res.status(201).json(
-            successResponse({
-                message: req.t('auth.register_success'),
-                data: {
-                    user: UserResource(newUser),
-                }
-            })
-        );
+    return res.status(201).json(
+        successResponse({
+            message: req.t('auth.register_success'),
+            data: {
+                user: UserResource(newUser),
+            }
+        })
+    );
+};
 
-    } catch (error) {
-        if (error instanceof UserExistException) {
-            return res.status(409).json(
-                errorResponse({ message: req.t(error.message) })
-            );
-        }
+export const login = async (req: Request, res: Response) => {
+    const { username, password } = req.body as LoginForm;
 
-        Log.error("Registration error:", {
-            error: error instanceof Error ? error.message : String(error),
-            stack: error instanceof Error ? error.stack : undefined,
-            body: req.body,
-        });
+    // Find user by username
+    const user = await UserModel.findOne({ username });
 
-        return res.status(500).json(
-            errorResponse({ message: req.t('auth.register_error') })
-        );
-    }
+    if (!user) throw new InvalidCredentialsException();
+
+    // Check password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) throw new InvalidCredentialsException();
+
+    // Generate token and set cookie
+    generateToken(user._id, res);
+
+    return res.status(200).json(
+        successResponse({
+            message: req.t('auth.login_success'),
+            data: {
+                user: UserResource(user),
+            }
+        })
+    );
+};
+
+export const logout = async (req: Request, res: Response) => {
+    clearAuthToken(res);
+    return res.status(200).json(successResponse({ message: req.t('auth.logout_success') }));
 };

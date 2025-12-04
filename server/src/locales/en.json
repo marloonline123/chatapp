@@ -3,9 +3,17 @@
     "register_success": "User registered successfully",
     "login_success": "User logged in successfully",
     "forgot_password_success": "Password reset link sent to email",
-    "reset_password_success": "Password has been reset successfully"
+    "reset_password_success": "Password has been reset successfully",
+    "user_not_found": "User not found",
+    "invalid_credentials": "Invalid username or password",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Forbidden access",
+    "logout_success": "User logged out successfully"
   },
   "validation": {
     "invalid_type": "{{ field }} must be a string"
+  },
+  "errors": {
+    "internal_server_error": "Internal server error"
   }
 }

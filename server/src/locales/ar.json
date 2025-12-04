@@ -3,9 +3,17 @@
         "register_success": "تم تسجيل المستخدم بنجاح",
         "login_success": "تم تسجيل دخول المستخدم بنجاح",
         "forgot_password_success": "تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني",
-        "reset_password_success": "تم إعادة تعيين كلمة المرور بنجاح"
+        "reset_password_success": "تم إعادة تعيين كلمة المرور بنجاح",
+        "user_not_found": "المستخدم غير موجود",
+        "invalid_credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+        "unauthorized": "دخول غير مصرح به",
+        "forbidden": "الدخول ممنوع",
+        "logout_success": "تم تسجيل الخروج بنجاح"
     },
     "validation": {
         "invalid_type": "{{ field }} يجب أن يكون نصا"
+    },
+    "errors": {
+        "internal_server_error": "خطأ داخلي في الخادم"
     }
 }
