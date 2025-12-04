@@ -12,5 +12,8 @@
     },
     "validation": {
         "invalid_type": "{{ field }} يجب أن يكون نصا"
+    },
+    "errors": {
+        "internal_server_error": "خطأ داخلي في الخادم"
     }
 }

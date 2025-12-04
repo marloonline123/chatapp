@@ -12,5 +12,8 @@
   },
   "validation": {
     "invalid_type": "{{ field }} must be a string"
+  },
+  "errors": {
+    "internal_server_error": "Internal server error"
   }
 }
