@@ -52,10 +52,8 @@ class MailService {
                 html: compiled(data),
             });
 
-            if (result) {
-                Log.info(`Email sent successfully to ${to}: ${result.messageId}`);
-                return result;
-            }
+            Log.info(`Email sent successfully to ${to}: ${result.messageId}`);
+            return result;
         } catch (error) {
             Log.error("Error sending email: ", {
                 message: (error as Error)?.message,
