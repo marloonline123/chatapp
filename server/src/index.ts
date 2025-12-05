@@ -5,6 +5,7 @@ import apiV1Router from "@/api/v1/routes/index.js";
 import i18n from "@/config/i18n.js";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "@/middlewares/errorHandler.js";
+import { engine } from "express-handlebars";
 
 const server = express();
 const PORT = parseInt(process.env.APP_PORT || '3000', 10);
@@ -18,6 +19,10 @@ server.use("/api/v1", apiV1Router);
 
 // Global Error Handler
 server.use(errorHandler);
+
+server.engine('handlebars', engine());
+server.set('view engine', 'handlebars');
+server.set('views', './views');
 
 createDbConnection()
 .then(() => {

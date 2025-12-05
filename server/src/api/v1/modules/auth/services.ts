@@ -1,3 +1,4 @@
+import mailService from "@/lib/mailService.js";
 import signToken from "@/utils/jwt.js";
 import type { CookieOptions, Response } from "express";
 import type { Types } from "mongoose";
@@ -18,4 +19,18 @@ export const generateToken = (userId: Types.ObjectId, res: Response) => {
 
 export const clearAuthToken = (res: Response) => {
     res.clearCookie('auth_token', COOKIE_OPTIONS);
+}
+
+export const sendWelcomeEmail = async (email: string, data: any) => {
+    const result = await mailService.sendMail({
+        to: email,
+        subject: "Welcome to ChatFlow!",
+        templateName: "welcome-mail",
+        data: {
+            ...data,
+            loginUrl: process.env.CLIENT_URL || 'https://chatflow.app/login'
+        }
+    });
+
+    return result;
 }

@@ -3,8 +3,8 @@ import type { LoginForm, RegisterForm } from "@/api/v1/modules/auth/schema.js";
 import { UserModel } from "@/api/v1/modules/auth/model.js";
 import { successResponse } from "@/utils/response.js";
 import bcrypt from "bcryptjs";
-import { clearAuthToken, generateToken } from "@/api/v1/modules/auth/services.js";
-import { UserResource } from "./resource.js";
+import { clearAuthToken, generateToken, sendWelcomeEmail } from "@/api/v1/modules/auth/services.js";
+import { UserResource } from "@/api/v1/modules/auth/resource.js";
 import { InvalidCredentialsException, UserExistException } from "@/exceptions/auth/index.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -13,6 +13,7 @@ export const register = async (req: Request, res: Response) => {
     // Check if user with same username or email exists
     const existingUser = await UserModel.findOne({ $or: [{ username }, { email }] });
 
+    // Throw error if user exists
     if (existingUser) throw new UserExistException();
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -27,6 +28,9 @@ export const register = async (req: Request, res: Response) => {
 
     // Generate token and set cookie
     generateToken(newUser._id, res);
+
+    // Send welcome email
+    sendWelcomeEmail(email, { name });
 
     return res.status(201).json(
         successResponse({
