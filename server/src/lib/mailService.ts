@@ -27,8 +27,16 @@ class MailService {
     private getTemplate(templateName: string): HandlebarsTemplateDelegate {
         if (!this.templateCache.has(templateName)) {
             const templatePath = path.join(__dirname, "../views/emailTemplates", `${templateName}.hbs`);
-            const source = fs.readFileSync(templatePath, "utf8");
-            this.templateCache.set(templateName, handlebars.compile(source));
+            try {
+                const source = fs.readFileSync(templatePath, "utf8");
+                this.templateCache.set(templateName, handlebars.compile(source));
+            } catch (error) {
+                Log.error(`Error loading email template ${templateName}: `, {
+                    message: (error as Error)?.message,
+                    stack: (error as Error)?.stack,
+                });
+                throw error;
+            }
         }
         return this.templateCache.get(templateName)!;
     }
