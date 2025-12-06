@@ -6,6 +6,7 @@ import i18n from "@/config/i18n.js";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "@/middlewares/errorHandler.js";
 import { engine } from "express-handlebars";
+import { multerMiddleware } from "@middlewares/multerMiddleware.js";
 
 const server = express();
 const PORT = parseInt(process.env.APP_PORT || '3000', 10);
@@ -14,6 +15,7 @@ const HOST = process.env.APP_HOST! || 'localhost';
 server.use(express.json());
 server.use(cookieParser());
 server.use(i18n);
+server.use(multerMiddleware())
 
 server.use("/api/v1", apiV1Router);
 
@@ -23,6 +25,8 @@ server.use(errorHandler);
 server.engine('handlebars', engine());
 server.set('view engine', 'handlebars');
 server.set('views', './views');
+server.use("/public", express.static("public"));
+
 
 createDbConnection()
 .then(() => {
