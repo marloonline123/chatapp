@@ -1,4 +1,4 @@
-import mailService from "@/lib/mailService.js";
+import mailService from "@/services/mailService.js";
 import signToken from "@/utils/jwt.js";
 import type { CookieOptions, Response } from "express";
 import type { Types } from "mongoose";

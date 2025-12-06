@@ -5,6 +5,13 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "paths": {
+      "@types/*": ["./src/types/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@services/*": ["./src/services/*"],
+      "@storage/*": ["./src/services/storage/*"],
+      "@v1Modules/*": ["./src/api/v1/modules/*"],
+      "@config/*": ["./src/config/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
       "@/*": ["./src/*"]
     },
 

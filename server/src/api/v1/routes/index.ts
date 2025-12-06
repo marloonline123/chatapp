@@ -13,7 +13,6 @@ const require = createRequire(import.meta.url);
 // Automatically require all `routes.ts` in modules
 fs.readdirSync(modulesPath).forEach((moduleFolder) => {
     const routeFile = path.join(modulesPath, moduleFolder, "routes.ts");
-    console.log('router file: ', routeFile);
     try {
         const moduleRouter = require(routeFile).default;
         apiV1Router.use(`/${moduleFolder}`, moduleRouter);

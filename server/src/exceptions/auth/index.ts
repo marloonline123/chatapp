@@ -60,3 +60,12 @@ export class UserNotFoundException extends Error {
         this.message = message;
     }
 }
+
+export class InvalidPasswordException extends Error {
+    status = 401;
+    constructor(message: string = 'auth.invalid_password') {
+        super(message);
+        this.name = 'InvalidPasswordException';
+        this.message = message;
+    }
+}
