@@ -6,8 +6,8 @@ export const storageConfig = {
         allowedMimeTypes: ["image/jpeg", "image/png", "application/pdf"],
     },
     s3: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+        key: process.env.AWS_ACCESS_KEY_ID || "",
+        secret: process.env.AWS_SECRET_ACCESS_KEY || "",
         region: process.env.AWS_REGION || "us-east-1",
         bucket: process.env.AWS_BUCKET || "",
         basePath: process.env.AWS_BASE_PATH || "",

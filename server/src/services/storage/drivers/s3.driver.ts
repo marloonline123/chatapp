@@ -16,12 +16,12 @@ export class S3Driver implements StorageDriver {
     }
 
     async save(file: Express.Multer.File, folder = "") {
-        const key = `${folder}/${Date.now()}_${file.originalname}`;
+        const path = `${folder}/${Date.now()}_${file.originalname}`;
 
         await this.s3.send(
             new PutObjectCommand({
                 Bucket: this.config.bucket,
-                Key: key,
+                Key: path,
                 Body: file.buffer,
                 ContentType: file.mimetype,
             })
@@ -29,8 +29,8 @@ export class S3Driver implements StorageDriver {
 
         return {
             driver: "s3",
-            url: `https://${this.config.bucket}.s3.amazonaws.com/${key}`,
-            key,
+            url: `https://${this.config.bucket}.s3.amazonaws.com/${path}`,
+            path,
         };
     }
 
@@ -41,5 +41,10 @@ export class S3Driver implements StorageDriver {
                 Key: key,
             })
         );
+    }
+
+    async exists(key: string) {
+        // TODO: check if file exists in S3
+        return false;
     }
 }

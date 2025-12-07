@@ -12,7 +12,8 @@
     "invalid_password": "Invalid password"
   },
   "validation": {
-    "invalid_type": "{{ field }} must be a string"
+    "invalid_type": "{{ field }} must be a string",
+    "invalid_email": "Invalid email"
   },
   "errors": {
     "internal_server_error": "Internal server error"

@@ -24,7 +24,7 @@ export const updateProfile = async (req: Request, res: Response) => {
     if (profilePicture) {
         const storage = new StorageService();
         const profilePictureUrl = await storage.save(profilePicture, "profile-pictures");
-        updateData.profilePicture = profilePictureUrl.url;
+        updateData.profilePicture = profilePictureUrl.path;
         if (await storage.exists(user.profilePicture)) await storage.delete(user.profilePicture);
     }
 

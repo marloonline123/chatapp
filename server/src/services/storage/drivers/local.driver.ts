@@ -41,9 +41,10 @@ export class LocalDriver implements StorageDriver {
     }
 
     private async generateUniqueName(targetDir: string, originalName: string, attempts = 0): Promise<string> {
+        const basename = path.basename(originalName);
         const ext = path.extname(originalName);
         const name = path.basename(originalName, ext);
-        const uniqueName = attempts > 0 ? `${name}(${attempts})${ext}` : originalName;
+        const uniqueName = attempts > 0 ? `${name}(${attempts})${ext}` : basename;
         const filePath = path.join(targetDir, uniqueName);
 
         try {
